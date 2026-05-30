@@ -1,0 +1,8 @@
+aws_region     = "us-east-1"
+project_name   = "starttech"
+environment    = "production"
+my_ip          = "109.151.8.162/32"
+mongo_uri      = "mongodb+srv://henry:henrymbaekeh21_db_user@cluster0.xtr8v.mongodb.net/much_todo_db?retryWrites=true&w=majority"
+jwt_secret_key = "YDdWCwjZ4YN2y9o/GhuqnGpj2lNk14ua8hwLY99KHNo="
+backend_image  = "docker.io/library/muchtodo-backend:latest"
+sns_email      = “henrymbaekeh21@gmail.com"
