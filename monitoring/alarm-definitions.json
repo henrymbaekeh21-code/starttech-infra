@@ -1,0 +1,59 @@
+{
+  "alarms": [
+    {
+      "name": "backend-high-cpu",
+      "metric": "CPUUtilization",
+      "namespace": "AWS/EC2",
+      "statistic": "Average",
+      "threshold": 70,
+      "comparison": "GreaterThanThreshold",
+      "period": 300,
+      "evaluation_periods": 2,
+      "description": "CPU usage > 70% for 10 minutes"
+    },
+    {
+      "name": "backend-low-cpu",
+      "metric": "CPUUtilization",
+      "namespace": "AWS/EC2",
+      "statistic": "Average",
+      "threshold": 30,
+      "comparison": "LessThanThreshold",
+      "period": 300,
+      "evaluation_periods": 2,
+      "description": "CPU usage < 30% for 10 minutes"
+    },
+    {
+      "name": "alb-5xx-errors",
+      "metric": "HTTPCode_Target_5XX_Count",
+      "namespace": "AWS/ApplicationELB",
+      "statistic": "Sum",
+      "threshold": 10,
+      "comparison": "GreaterThanThreshold",
+      "period": 300,
+      "evaluation_periods": 2,
+      "description": "5xx errors > 10 in 10 minutes"
+    },
+    {
+      "name": "alb-high-latency",
+      "metric": "TargetResponseTime",
+      "namespace": "AWS/ApplicationELB",
+      "statistic": "Average",
+      "threshold": 2,
+      "comparison": "GreaterThanThreshold",
+      "period": 300,
+      "evaluation_periods": 3,
+      "description": "Response time > 2s for 15 minutes"
+    },
+    {
+      "name": "unhealthy-hosts",
+      "metric": "HealthyHostCount",
+      "namespace": "AWS/ApplicationELB",
+      "statistic": "Average",
+      "threshold": 2,
+      "comparison": "LessThanThreshold",
+      "period": 60,
+      "evaluation_periods": 2,
+      "description": "Less than 2 healthy backend hosts"
+    }
+  ]
+}

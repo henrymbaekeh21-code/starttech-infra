@@ -1,0 +1,37 @@
+# ============================================================================
+# Terraform Variables - Example
+# ============================================================================
+# Copy this file to terraform.tfvars and fill in your actual values.
+# NEVER commit terraform.tfvars to Git! It's in .gitignore.
+# ============================================================================
+
+# AWS Region
+aws_region = "us-east-1"
+
+# Project & Environment
+project_name = "starttech"
+environment  = "production"
+
+# Your IP for SSH access (CIDR notation)
+my_ip = "YOUR_IP/32"
+
+# MongoDB Atlas connection string
+# Format: mongodb+srv://username:password@cluster.mongodb.net/dbname?retryWrites=true&w=majority
+mongo_uri = "YOUR_MONGODB_ATLAS_URI"
+
+# JWT Secret Key (use a strong random string)
+jwt_secret_key = "YOUR_JWT_SECRET_KEY"
+
+# EC2 Key Pair name (optional, for SSH access)
+key_name = "YOUR_KEY_PAIR_NAME"
+
+# Backend Docker image
+# Format: account.dkr.ecr.region.amazonaws.com/repo:tag OR dockerhub_user/image:tag
+backend_image = "YOUR_ECR_REPO/starttech-backend:latest"
+
+# Notification email for CloudWatch alarms
+sns_email = "YOUR_EMAIL@example.com"
+
+# CloudFront (optional - for custom domain)
+# domain_name     = "app.yourdomain.com"
+# certificate_arn = "arn:aws:acm:us-east-1:ACCOUNT_ID:certificate/CERT_ID"

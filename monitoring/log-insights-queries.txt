@@ -1,0 +1,82 @@
+# ============================================================================
+# CloudWatch Logs Insights - Useful Queries
+# ============================================================================
+# Run these queries in the CloudWatch Logs Insights console.
+# Replace the log group name as needed.
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Basic Queries
+# ---------------------------------------------------------------------------
+
+# View all logs (most recent first)
+fields @timestamp, @message
+| sort @timestamp desc
+| limit 100
+
+# Filter by log level
+fields @timestamp, @message
+| filter @message like /ERROR/
+| sort @timestamp desc
+| limit 50
+
+# Filter by specific error
+fields @timestamp, @message
+| filter @message like /MongoDB/
+| sort @timestamp desc
+| limit 50
+
+# ---------------------------------------------------------------------------
+# Error Analysis
+# ---------------------------------------------------------------------------
+
+# Error count by hour
+fields @timestamp, @message
+| filter @message like /ERROR/
+| stats count() as error_count by bin(1h)
+| sort error_count desc
+
+# Top error patterns
+fields @timestamp, @message
+| filter @message like /error/
+| parse @message "*error*" as error_msg
+| stats count(*) as count by error_msg
+| sort count desc
+| limit 20
+
+# ---------------------------------------------------------------------------
+# Performance
+# ---------------------------------------------------------------------------
+
+# Request latency distribution
+fields @timestamp, @message
+| filter @message like /request completed/
+| parse @message "*in *ms" as req_info, latency
+| stats avg(latency) as avg_latency, max(latency) as max_latency, percentile(latency, 99) as p99 by bin(5m)
+| sort @timestamp desc
+
+# Slow requests (> 1 second)
+fields @timestamp, @message
+| filter @message like /request completed/
+| parse @message "*in *ms" as req_info, latency
+| filter latency > 1000
+| sort latency desc
+| limit 50
+
+# ---------------------------------------------------------------------------
+# HTTP Status Codes
+# ---------------------------------------------------------------------------
+
+# Status code distribution
+fields @timestamp, @message
+| filter @message like /HTTP/
+| parse @message "HTTP/1.1\" * " as status_code
+| stats count(*) as count by status_code
+| sort count desc
+
+# 5xx errors timeline
+fields @timestamp, @message
+| filter @message like /HTTP/
+| parse @message "HTTP/1.1\" 5" as status
+| stats count() as error_5xx by bin(5m)
+| sort @timestamp desc
